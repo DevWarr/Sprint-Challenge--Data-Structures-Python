@@ -44,11 +44,29 @@ class RingBuffer:
 
 
 class ArrayRingBuffer:
+    """
+    A Ring Buffer, 
+    with a Python list as the data structure for storage.
+
+    This allows lists to be used peacefully, as we're never going 
+    to append any extra data to this list. Once we reach the end
+    of the list, we ring to the beginning, so the data
+    we allocate in the beginning is the only data we need.
+    """
+
     def __init__(self, capacity):
-        pass
+        self.storage = [None] * capacity
+        self.current = 0
 
     def append(self, item):
-        pass
+
+        self.storage[self.current] = item
+        self.current += 1
+
+        if self.current == len(self.storage):
+            # If we're at the end of our list, 
+            # ring back around to the beginning
+            self.current = 0
 
     def get(self):
-        pass
+        return [item for item in self.storage if item is not None]
