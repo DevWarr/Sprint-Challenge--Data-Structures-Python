@@ -45,6 +45,36 @@ class LinkedList:
         # if we've gotten here, then the target node isn't in our list
         return False
 
-    def reverse_list(self, node, prev):
+    def __reverse_list(self, node, prev):
+
         # You must use recursion for this solution
-        pass
+        if node is None:
+            return
+        if node.next_node is None:
+            self.head = node
+
+        self.__reverse_list(node.next_node, node)
+        node.next_node = prev
+        
+    def reverse_list(self, node=None, prev=None):
+        """
+        The public reverse_list method.
+
+        No matter what's passed into this function,
+        it will always rever the linked list starting at the 
+        head.
+
+        If you had a list like:
+          0 → 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10
+
+        If you called the above function like
+          __reverse_list([node with value of 5])
+
+        You would end up with a linked list like:
+          0 → 1 → 2 → 3 → 4 → 5 ← 6 ← 7 ← 8 ← 9 ← 10
+        Where is the head in this case . . ?
+        
+        This newer function ensures that we always
+        start reversing at the head of the list.
+        """
+        self.__reverse_list(self.head, None)
